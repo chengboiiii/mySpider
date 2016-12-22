@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.http.HttpHost;
 
@@ -21,6 +22,7 @@ public class Site {
 	private boolean isUseGzip;
 	private int timeOut =5000;
 	private int retryTimes=3;//建立连接重试次数
+	private Set<Integer> acceptCode;
 	
 	public HttpHost getHttpProxy() {
 		return httpProxy;
@@ -46,5 +48,14 @@ public class Site {
 	public Map<String,Map<String, String>> getAllCookies() {
         return cookies;
     }
+	public Set<Integer> getAcceptStatCode() {
+		return acceptCode;
+	}
+	public String getCharset() {
+		return charset;
+	}
+	public Map<String, String> getHeaders() {
+		return headers;
+	}
 
 }

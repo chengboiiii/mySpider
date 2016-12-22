@@ -1,8 +1,11 @@
 package com.chengbo.spider.model;
 
+import org.apache.http.NameValuePair;
+
 public class Request {
 	private String url;
-
+	private String method;
+	private NameValuePair[] params;
 	public String getUrl() {
 		return url;
 	}
@@ -12,5 +15,11 @@ public class Request {
 	
 	public Request(String url){
 		this.url = url;
+	}
+	public String getMethod() {
+		return method;
+	}
+	public NameValuePair[] getParams() {
+		return params;
 	}
 }
