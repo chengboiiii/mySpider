@@ -57,5 +57,8 @@ public class Site {
 	public Map<String, String> getHeaders() {
 		return headers;
 	}
-
+	public int getCycleRetryTimes() {
+		return cycleRetryTimes;
+	}
+	
 }
