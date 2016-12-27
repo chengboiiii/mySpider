@@ -2,6 +2,7 @@ package com.chengbo.spider.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,13 +23,16 @@ public class Site {
 	private boolean isUseGzip;
 	private int timeOut =5000;
 	private int retryTimes=3;//建立连接重试次数
-	private Set<Integer> acceptCode;
+	private Set<Integer> acceptCode = new HashSet<Integer>();
 	
 	public HttpHost getHttpProxy() {
 		return httpProxy;
 	}
 	public String getUserAgent() {
 		return userAgent;
+	}
+	public void setUserAgent(String userAgent) {
+		this.userAgent = userAgent;
 	}
 	public boolean isUseGzip() {
 		return isUseGzip;
@@ -59,6 +63,9 @@ public class Site {
 	}
 	public int getCycleRetryTimes() {
 		return cycleRetryTimes;
+	}
+	public static Site me() {
+		return new Site();
 	}
 	
 }

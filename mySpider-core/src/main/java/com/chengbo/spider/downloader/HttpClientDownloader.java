@@ -18,6 +18,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -39,7 +40,7 @@ public class HttpClientDownloader implements Downloader{
 			return httpClientGenerator.getClient(site,proxy);
 		}else{
 			String domain = site.getDomain();
-			CloseableHttpClient httpClient = null;
+			CloseableHttpClient httpClient = httpclientMap.get(domain);
 			if(httpClient == null){
 				synchronized (this) {
 					httpClient = httpclientMap.get(domain);
@@ -63,10 +64,12 @@ public class HttpClientDownloader implements Downloader{
 		Map<String,String> headers = null;
 		if(site != null){
 			acceptStatCode = site.getAcceptStatCode();
+			acceptStatCode.add(200);
 			charset = site.getCharset();
 			headers = site.getHeaders();
 		}else{
-			acceptStatCode = new HashSet<Integer>(200);
+			acceptStatCode = new HashSet<>();
+			acceptStatCode.add(200);
 		}
 		CloseableHttpResponse httpResponse = null;
 		int statusCode = 0;
@@ -86,7 +89,14 @@ public class HttpClientDownloader implements Downloader{
 				 return addToCycleRetry(request, site);
 			}
 		}finally {
-			
+			try {
+                if (httpResponse != null) {
+                    //连接释放回连接池
+                    EntityUtils.consume(httpResponse.getEntity());
+                }
+            } catch (IOException e) {
+                System.out.println("关闭httpResponse失败...");
+            }
 		}
 		return null;
 	}
@@ -184,4 +194,5 @@ public class HttpClientDownloader implements Downloader{
 			return RequestBuilder.get();
 		}
 	}
+
 }
