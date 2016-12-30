@@ -10,6 +10,8 @@ import java.util.Set;
 
 import org.apache.http.HttpHost;
 
+import com.chengbo.spider.proxy.Proxypool;
+
 public class Site {
 	private String domain;
 	private String userAgent;
@@ -24,6 +26,7 @@ public class Site {
 	private int timeOut =5000;
 	private int retryTimes=3;//建立连接重试次数
 	private Set<Integer> acceptCode = new HashSet<Integer>();
+	private Proxypool proxypool;
 	
 	public HttpHost getHttpProxy() {
 		return httpProxy;
@@ -31,8 +34,9 @@ public class Site {
 	public String getUserAgent() {
 		return userAgent;
 	}
-	public void setUserAgent(String userAgent) {
+	public Site setUserAgent(String userAgent) {
 		this.userAgent = userAgent;
+		return this;
 	}
 	public boolean isUseGzip() {
 		return isUseGzip;
@@ -66,6 +70,13 @@ public class Site {
 	}
 	public static Site me() {
 		return new Site();
+	}
+	public Proxypool getProxypool() {
+		return proxypool;
+	}
+	public Site setProxypool(List<String[]> proxyList) {
+		this.proxypool =new Proxypool().addProxy(proxyList);
+		return this;
 	}
 	
 }

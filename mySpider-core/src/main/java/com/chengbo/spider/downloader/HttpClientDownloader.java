@@ -76,6 +76,10 @@ public class HttpClientDownloader implements Downloader{
 		HttpHost proxyHost = null;
 		Proxy proxy = null;
 		try{
+			if(site.getProxypool()!=null){
+				proxy = site.getProxypool().getProxy();
+				proxyHost = proxy.getHttpHost();
+			}
 			HttpUriRequest httpUriRequest = getHttpUriRequest(request, site, headers, proxyHost);
 			httpResponse = getHttpClient(site, proxy).execute(httpUriRequest);
 			statusCode = httpResponse.getStatusLine().getStatusCode();

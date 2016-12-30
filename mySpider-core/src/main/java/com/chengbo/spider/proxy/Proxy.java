@@ -6,7 +6,7 @@ public class Proxy {
 	private String user;
 	private String password;
 	private HttpHost httpHost;
-	
+	private int failNum;
 	public String getUser() {
 		return user;
 	}
@@ -16,5 +16,15 @@ public class Proxy {
 	public String getPassword() {
 		return password;
 	}
-
+	public int getFailNum() {
+		return failNum;
+	}
+	public void setFailNum(int failNum) {
+		this.failNum = failNum;
+	}
+	public Proxy(HttpHost proxyHost, String user, String pwd) {
+		this.httpHost = proxyHost;
+		this.user = user;
+		this.password =pwd;
+	}
 }
